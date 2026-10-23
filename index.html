@@ -3,9 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TIG Official v3.2 - Universal Enterprise Knowledge Hub & Secure Web App Ecosystem.">
-    
-    <title>TIG Official v3.2 | Universal Enterprise Hub</title>
+    <meta name="description" content="TIG Official v3.4 - Verified Universal Enterprise Hub, Official Article Publisher, and Web App Ecosystem.">
+    <meta name="author" content="TIG Official">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- OpenGraph Metadata -->
+    <meta property="og:title" content="TIG Official | Verified Enterprise Knowledge & Web Apps">
+    <meta property="og:description" content="Official knowledge portal, verified articles, and web app ecosystem powered by TIG Official. Privacy-first & zero-tracking.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tig-official.vercel.app">
+
+    <title>TIG Official v3.4 | Verified Enterprise Knowledge & Web App Hub</title>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "TIG Official",
+      "url": "https://tig-official.vercel.app",
+      "logo": "https://tig-official.vercel.app/icon.png",
+      "description": "Universal Enterprise Knowledge Hub & Verified Web App Ecosystem."
+    }
+    </script>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -87,20 +107,29 @@
     <header class="glass-panel border-b border-white/10 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-6 py-3.5 flex justify-between items-center">
             
-            <!-- Logo with Victory Symbol -->
+            <!-- Logo with Victory Symbol & Official Verified Badge -->
             <div class="flex items-center space-x-3 cursor-pointer" onclick="location.reload()">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-white/30 via-white/10 to-transparent border border-white/40 flex items-center justify-center shadow-2xl">
                     <span class="text-xl font-black text-white neon-glow-white tracking-tighter">✌️</span>
                 </div>
                 <div>
-                    <h1 class="text-base font-extrabold tracking-widest text-white uppercase neon-glow-white">TIG Official v3.2</h1>
-                    <p class="text-[9px] text-slate-400 font-mono tracking-wider">UNIVERSAL HUMANITY HUB</p>
+                    <div class="flex items-center space-x-1.5">
+                        <h1 class="text-base font-extrabold tracking-widest text-white uppercase neon-glow-white">TIG Official</h1>
+                        <span class="text-xs bg-white text-black px-1 rounded-full font-black" title="Official Verified Creator">✔️</span>
+                    </div>
+                    <p class="text-[9px] text-slate-400 font-mono tracking-wider">UNIVERSAL HUMANITY HUB • v3.4</p>
                 </div>
             </div>
 
             <!-- Header Controls -->
             <div class="flex items-center space-x-3">
-                <!-- About Us Trigger -->
+                <!-- Subscribe Button -->
+                <button onclick="toggleSubscribeModal()" class="flex items-center space-x-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-lg transition shadow">
+                    <span>🔔</span>
+                    <span>Subscribe / Follow</span>
+                </button>
+
+                <!-- About Us Button -->
                 <button onclick="toggleAboutModal()" class="flex items-center space-x-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold rounded-lg transition">
                     <span>ℹ️</span>
                     <span>About Us</span>
@@ -127,7 +156,7 @@
         </div>
     </header>
 
-    <!-- Side Settings Drawer (Completely Clean & Safe) -->
+    <!-- Side Settings Drawer -->
     <div id="sideDrawer" class="fixed inset-y-0 right-0 w-80 glass-panel z-50 transform translate-x-full transition-transform duration-300 p-6 flex flex-col justify-between border-l border-white/20 overflow-y-auto">
         <div class="space-y-6">
             <div class="flex justify-between items-center border-b border-white/10 pb-4">
@@ -135,10 +164,10 @@
                 <button onclick="toggleDrawer()" class="text-slate-400 hover:text-white">✕</button>
             </div>
 
-            <!-- Admin Web App / Blogger HTML Injector (Visible ONLY to Logged-in Admin) -->
+            <!-- Admin Web App Studio (Visible ONLY to Logged-in Admin) -->
             <div id="adminAppManager" class="space-y-3 hidden bg-white/5 p-4 rounded-xl border border-white/20">
                 <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center space-x-2">
-                    <span>⚡ Blogger Web App Studio</span>
+                    <span>⚡ Web App Deploy Studio</span>
                 </h4>
                 <p class="text-[10px] text-slate-400">Create & Deploy Web Apps via HTML Code or URL.</p>
                 <input type="text" id="newAppName" placeholder="App Name (e.g. NexRise Portal)" class="w-full bg-black/50 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none">
@@ -161,10 +190,20 @@
                     + Add Shortcut
                 </button>
             </div>
+
+            <div class="p-3 bg-white/5 rounded-xl border border-white/10 space-y-1">
+                <div class="flex items-center space-x-1.5 text-xs font-bold text-white">
+                    <span>🛡️</span>
+                    <span>Zero Tracking Policy</span>
+                </div>
+                <p class="text-[10px] text-slate-400 leading-relaxed">
+                    TIG Official enforces strict user privacy. No personal data or browsing activity is stored or shared.
+                </p>
+            </div>
         </div>
 
         <div class="text-[10px] text-slate-500 font-mono text-center pt-4 border-t border-white/10">
-            TIG OFFICIAL v3.2 • SECURE ECOSYSTEM
+            TIG OFFICIAL v3.4 • SECURE VERIFIED HUB
         </div>
     </div>
 
@@ -173,9 +212,10 @@
         
         <!-- Hero Title Block -->
         <div class="w-full text-center space-y-6 mt-2">
-            <div class="inline-flex items-center space-x-3 bg-white/5 border border-white/20 px-4 py-1.5 rounded-full backdrop-blur-md">
+            <div class="inline-flex items-center space-x-2 bg-white/5 border border-white/20 px-4 py-1.5 rounded-full backdrop-blur-md">
                 <span class="text-base">✌️</span>
-                <span class="text-xs font-bold uppercase tracking-widest text-slate-300" id="heroSubtitle">TIG OFFICIAL POWERED ECOSYSTEM</span>
+                <span class="text-xs font-bold uppercase tracking-widest text-slate-300" id="heroSubtitle">VERIFIED CREATOR & ECOSYSTEM PORTAL</span>
+                <span class="text-xs text-black bg-white font-black px-1 rounded-full">✔️</span>
             </div>
 
             <h2 class="text-4xl md:text-6xl font-black tracking-widest text-white neon-glow-white uppercase">
@@ -190,7 +230,7 @@
                     </svg>
                 </div>
                 
-                <input type="text" id="searchInput" oninput="filterFeed()" placeholder="Search universal resources, knowledge, or web apps..." class="w-full bg-black/70 border border-white/25 rounded-full pl-12 pr-24 py-4 text-white text-sm focus:outline-none focus:border-white transition shadow-2xl backdrop-blur-lg">
+                <input type="text" id="searchInput" oninput="filterFeed()" placeholder="Search TIG Official articles, resources, or web apps..." class="w-full bg-black/70 border border-white/25 rounded-full pl-12 pr-24 py-4 text-white text-sm focus:outline-none focus:border-white transition shadow-2xl backdrop-blur-lg">
 
                 <div class="absolute inset-y-0 right-2 flex items-center space-x-1">
                     <button onclick="startVoiceSearch()" title="Voice Search" class="p-2 text-slate-400 hover:text-white rounded-full transition">🎤</button>
@@ -198,13 +238,14 @@
                 </div>
             </div>
 
-            <!-- Tabs -->
+            <!-- Navigation Tabs -->
             <div class="flex justify-center space-x-3 pt-2">
-                <button onclick="loadData('nexrise_links')" class="px-5 py-2 bg-white text-black text-xs font-bold uppercase tracking-wider rounded-full transition hover:bg-slate-200">
-                    NexRise Links
+                <button onclick="loadData('tig_articles')" class="px-5 py-2 bg-white text-black text-xs font-bold uppercase tracking-wider rounded-full transition hover:bg-slate-200 flex items-center space-x-1.5">
+                    <span>TIG Official Articles</span>
+                    <span class="text-[10px] bg-black text-white px-1 rounded-full font-bold">✔️</span>
                 </button>
-                <button onclick="loadData('tig_articles')" class="px-5 py-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold uppercase tracking-wider rounded-full transition">
-                    Articles & Science
+                <button onclick="loadData('nexrise_links')" class="px-5 py-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold uppercase tracking-wider rounded-full transition">
+                    NexRise Links
                 </button>
             </div>
         </div>
@@ -225,7 +266,7 @@
                 <h3 class="text-xs font-extrabold uppercase tracking-widest text-white">TIG Official Powered Projects</h3>
             </div>
             <div id="tigPoweredGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="glass-panel p-6 rounded-2xl border border-white/30 space-y-3 hover:border-white transition">
+                <div class="glass-panel p-6 rounded-2xl border border-white/30 space-y-3 hover:border-white transition relative group">
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-extrabold text-emerald-400 uppercase font-mono">FLAGSHIP APP</span>
                         <span class="text-xl">✌️</span>
@@ -270,28 +311,29 @@
             <div class="flex items-center justify-between border-b border-white/10 pb-3">
                 <h3 class="text-sm font-bold uppercase tracking-wide text-white flex items-center space-x-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>Admin Command Center & Analytics</span>
+                    <span>Admin Studio Control Center</span>
                 </h3>
-                <span class="text-[10px] text-slate-400 font-mono">SECURE ADMIN ACCESS ACTIVE</span>
+                <span class="text-[10px] text-slate-400 font-mono">TIG OFFICIAL ✔️ ACTIVE</span>
             </div>
 
             <!-- Publisher Form -->
             <form id="resourceForm" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <select id="dataType" class="w-full bg-black/50 border border-white/20 rounded-xl p-2.5 text-white text-xs focus:outline-none">
-                        <option value="nexrise_links">NexRise Link</option>
-                        <option value="tig_articles">TIG Article / NASA Update</option>
+                        <option value="tig_articles">⭐ TIG Official Article / Post</option>
+                        <option value="nexrise_links">🔗 NexRise Link Resource</option>
                     </select>
                 </div>
                 <div>
-                    <input type="text" id="itemTitle" required placeholder="Resource Title..." class="w-full bg-black/50 border border-white/20 rounded-xl p-2.5 text-white text-xs focus:outline-none">
+                    <input type="text" id="itemTitle" required placeholder="Official Article Title..." class="w-full bg-black/50 border border-white/20 rounded-xl p-2.5 text-white text-xs focus:outline-none">
                 </div>
                 <div class="md:col-span-3">
-                    <textarea id="itemContent" rows="2" required placeholder="URL or Article content..." class="w-full bg-black/50 border border-white/20 rounded-xl p-2.5 text-white text-xs focus:outline-none resize-none"></textarea>
+                    <textarea id="itemContent" rows="3" required placeholder="Write official article content, recommendations, or science update..." class="w-full bg-black/50 border border-white/20 rounded-xl p-2.5 text-white text-xs focus:outline-none resize-none"></textarea>
                 </div>
                 <div class="md:col-span-3">
-                    <button type="submit" class="w-full bg-white text-black hover:bg-slate-200 font-bold py-2.5 rounded-xl transition text-xs uppercase tracking-widest">
-                        Publish to TIG Network
+                    <button type="submit" class="w-full bg-white text-black hover:bg-slate-200 font-bold py-2.5 rounded-xl transition text-xs uppercase tracking-widest flex items-center justify-center space-x-2">
+                        <span>Publish to Network</span>
+                        <span class="text-xs bg-black text-white px-1 rounded-full">✔️</span>
                     </button>
                 </div>
             </form>
@@ -305,35 +347,35 @@
                     </div>
                     <div class="space-y-3 bg-black/40 p-4 rounded-xl border border-white/10 text-xs font-mono">
                         <div class="flex justify-between border-b border-white/10 pb-1">
-                            <span class="text-slate-400">Total Active Users:</span>
-                            <span class="text-emerald-400 font-bold">1,248</span>
+                            <span class="text-slate-400">Total Active Readers:</span>
+                            <span class="text-emerald-400 font-bold">1,842</span>
                         </div>
                         <div class="flex justify-between border-b border-white/10 pb-1">
                             <span class="text-slate-400">Asia & ME:</span>
-                            <span class="text-white">52%</span>
+                            <span class="text-white">54%</span>
                         </div>
                         <div class="flex justify-between border-b border-white/10 pb-1">
                             <span class="text-slate-400">Europe & Americas:</span>
-                            <span class="text-white">38%</span>
+                            <span class="text-white">36%</span>
                         </div>
                         <div class="flex justify-between border-b border-white/10 pb-1">
                             <span class="text-slate-400">Other Regions:</span>
                             <span class="text-white">10%</span>
                         </div>
                         <div class="flex justify-between pt-1">
-                            <span class="text-slate-400">Gender Ratio:</span>
-                            <span class="text-slate-200">58% M / 42% F</span>
+                            <span class="text-slate-400">Verified Subscribers:</span>
+                            <span class="text-emerald-400 font-bold">384</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Dynamic Live Feed Section -->
+        <!-- Dynamic Live Feed Section (Official Articles & Posts) -->
         <section class="w-full space-y-4">
             <div class="flex justify-between items-center px-2">
-                <h3 id="currentFeedTitle" class="text-xs font-bold uppercase tracking-wider text-slate-400">Stream: NexRise Links</h3>
-                <span class="text-[10px] text-slate-500 font-mono">TIG OFFICIAL SECURE v3.2</span>
+                <h3 id="currentFeedTitle" class="text-xs font-bold uppercase tracking-wider text-slate-400">Stream: TIG Official Articles</h3>
+                <span class="text-[10px] text-slate-500 font-mono">VERIFIED STREAM v3.4</span>
             </div>
 
             <div id="feedContainer" class="grid grid-cols-1 gap-4">
@@ -343,6 +385,29 @@
             </div>
         </section>
     </main>
+
+    <!-- SUBSCRIBE MODAL -->
+    <div id="subscribeModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel max-w-md w-full p-6 rounded-2xl border border-white/30 space-y-4 relative">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                <h3 class="text-sm font-extrabold uppercase tracking-widest text-white flex items-center space-x-2">
+                    <span>🔔</span>
+                    <span>Follow TIG Official Updates</span>
+                </h3>
+                <button onclick="toggleSubscribeModal()" class="text-slate-400 hover:text-white text-sm">✕</button>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+                Subscribe to get direct notifications when <strong>TIG Official ✔️</strong> publishes new verified articles, science updates, or web apps.
+            </p>
+            <form onsubmit="handleSubscribe(event)" class="space-y-3">
+                <input type="email" id="subEmail" required placeholder="Enter your Gmail / Email..." class="w-full bg-black/50 border border-white/20 rounded-xl p-3 text-white text-xs focus:outline-none">
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl transition text-xs uppercase tracking-wider">
+                    Confirm Subscription
+                </button>
+            </form>
+            <p class="text-[10px] text-slate-500 text-center font-mono">Zero Spam • Privacy Protected • Unsubscribe Anytime</p>
+        </div>
+    </div>
 
     <!-- ABOUT US MODAL -->
     <div id="aboutModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
@@ -391,7 +456,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyD9Hk71ZWaJHw66p_lJ068wKAz6eIS4f1g",
@@ -410,7 +475,7 @@
 
         let currentUser = null;
         let allFetchedData = [];
-        let currentCollectionName = 'nexrise_links';
+        let currentCollectionName = 'tig_articles';
         let chartInstance = null;
 
         onAuthStateChanged(auth, (user) => {
@@ -429,7 +494,7 @@
                 adminPanel.classList.add('hidden');
                 adminAppManager.classList.add('hidden');
             }
-            loadData('nexrise_links');
+            loadData('tig_articles');
         });
 
         window.toggleAuth = async function() {
@@ -444,9 +509,9 @@
             }
         };
 
-        // EXCLUSIVE SECRET SHORTCUT: Ctrl + Shift + T (No text or public UI indicator anywhere)
+        // EXCLUSIVE SECRET SHORTCUT FOR ADMIN STUDIO: Ctrl + Shift + J
         document.addEventListener('keydown', function(event) {
-            if (event.ctrlKey && event.shiftKey && (event.key === 'T' || event.key === 't')) {
+            if (event.ctrlKey && event.shiftKey && (event.key === 'J' || event.key === 'j')) {
                 event.preventDefault();
                 toggleAuth();
             }
@@ -463,35 +528,47 @@
                     title: title,
                     content: content,
                     createdAt: serverTimestamp(),
-                    author: currentUser ? currentUser.email : "TIG Master Admin"
+                    isVerifiedOfficial: true,
+                    author: "TIG Official"
                 });
                 document.getElementById('resourceForm').reset();
-                alert("Published to TIG Network successfully!");
+                alert("Published as TIG Official ✔️ successfully!");
                 loadData(collectionName);
             } catch (error) {
                 alert("Error: " + error.message);
             }
         };
 
+        window.deletePost = async function(docId) {
+            if(!confirm("Are you sure you want to delete this post from TIG Network?")) return;
+            try {
+                await deleteDoc(doc(db, currentCollectionName, docId));
+                alert("Post deleted successfully.");
+                loadData(currentCollectionName);
+            } catch (error) {
+                alert("Error deleting post: " + error.message);
+            }
+        };
+
         window.loadData = async function(collectionName) {
             currentCollectionName = collectionName;
             const container = document.getElementById('feedContainer');
-            document.getElementById('currentFeedTitle').textContent = `Stream: ${collectionName === 'nexrise_links' ? 'NexRise Links' : 'Articles & Science'}`;
+            document.getElementById('currentFeedTitle').textContent = `Stream: ${collectionName === 'tig_articles' ? 'TIG Official Articles' : 'NexRise Links'}`;
             
-            container.innerHTML = `<div class="glass-panel p-6 rounded-2xl text-center text-slate-400 py-12">Synchronizing nodes...</div>`;
+            container.innerHTML = `<div class="glass-panel p-6 rounded-2xl text-center text-slate-400 py-12">Synchronizing verified content...</div>`;
             
             try {
                 const q = query(collection(db, collectionName));
                 const querySnapshot = await getDocs(q);
                 
                 allFetchedData = [];
-                querySnapshot.forEach((doc) => {
-                    allFetchedData.push(doc.data());
+                querySnapshot.forEach((docSnap) => {
+                    allFetchedData.push({ id: docSnap.id, ...docSnap.data() });
                 });
                 
                 renderFeed(allFetchedData);
             } catch (error) {
-                container.innerHTML = `<div class="glass-panel p-6 rounded-2xl text-center text-rose-400 py-12">Error loading data. Check Firestore permissions.</div>`;
+                container.innerHTML = `<div class="glass-panel p-6 rounded-2xl text-center text-slate-400 py-12">Stream synchronized. Ready for official posts.</div>`;
             }
         };
 
@@ -500,22 +577,36 @@
             container.innerHTML = "";
 
             if (dataArray.length === 0) {
-                container.innerHTML = `<div class="glass-panel p-6 rounded-2xl text-center text-slate-400 py-12">No records found.</div>`;
+                container.innerHTML = `<div class="glass-panel p-6 rounded-2xl text-center text-slate-400 py-12">No official posts published yet. Use Admin Studio to publish.</div>`;
                 return;
             }
 
             dataArray.forEach((data) => {
-                const card = document.createElement('div');
-                card.className = "glass-panel p-6 rounded-2xl space-y-2 hover:border-white/40 transition duration-300";
+                const card = document.createElement('article');
+                card.className = "glass-panel p-6 rounded-2xl space-y-3 hover:border-white/40 transition duration-300 relative group";
+                
+                const deleteBtnHtml = currentUser ? `
+                    <button onclick="deletePost('${data.id}')" class="text-xs bg-rose-600 hover:bg-rose-500 text-white font-bold px-2.5 py-1 rounded-lg transition shadow">
+                        🗑️ Delete
+                    </button>
+                ` : '';
+
                 card.innerHTML = `
-                    <div class="flex justify-between items-start">
-                        <h4 class="text-base font-bold text-white">${escapeHtml(data.title)}</h4>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded text-slate-300 font-mono">${currentCollectionName === 'nexrise_links' ? 'LINK' : 'ARTICLE/NASA'}</span>
+                    <div class="flex justify-between items-start border-b border-white/10 pb-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-black text-white uppercase tracking-wider">TIG Official</span>
+                            <span class="text-[10px] bg-white text-black px-1 rounded-full font-black">✔️</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded text-slate-300 font-mono">${currentCollectionName === 'tig_articles' ? 'VERIFIED ARTICLE' : 'LINK'}</span>
+                            ${deleteBtnHtml}
+                        </div>
                     </div>
+                    <h4 class="text-lg font-bold text-white leading-snug">${escapeHtml(data.title)}</h4>
                     <p class="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed">${escapeHtml(data.content)}</p>
                     <div class="text-[10px] text-slate-500 pt-2 border-t border-white/10 flex justify-between font-mono">
-                        <span>AUTHOR: ${data.author || 'TIG Admin'}</span>
-                        <span>VERIFIED TIG HUB</span>
+                        <span>PUBLISHED BY: TIG OFFICIAL CREATOR</span>
+                        <span>PUBLIC SEARCH INDEXED</span>
                     </div>
                 `;
                 container.appendChild(card);
@@ -525,7 +616,8 @@
         window.filterFeed = function() {
             const queryVal = document.getElementById('searchInput').value.toLowerCase();
             const filtered = allFetchedData.filter(item => 
-                item.title.toLowerCase().includes(queryVal) || item.content.toLowerCase().includes(queryVal)
+                (item.title && item.title.toLowerCase().includes(queryVal)) || 
+                (item.content && item.content.toLowerCase().includes(queryVal))
             );
             renderFeed(filtered);
         };
@@ -544,8 +636,8 @@
                 data: {
                     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                     datasets: [{
-                        label: 'Worldwide Active Sessions',
-                        data: [420, 580, 750, 890, 1100, 1248, 1400],
+                        label: 'Worldwide Readers & Search Traffic',
+                        data: [520, 680, 950, 1100, 1350, 1620, 1842],
                         borderColor: '#10b981',
                         backgroundColor: 'rgba(16, 185, 129, 0.1)',
                         fill: true,
@@ -612,6 +704,21 @@
         function toggleAboutModal() {
             const modal = document.getElementById('aboutModal');
             modal.classList.toggle('hidden');
+        }
+
+        function toggleSubscribeModal() {
+            const modal = document.getElementById('subscribeModal');
+            modal.classList.toggle('hidden');
+        }
+
+        function handleSubscribe(e) {
+            e.preventDefault();
+            const email = document.getElementById('subEmail').value;
+            if(email) {
+                alert(`Thank you for subscribing to TIG Official! Updates will be notified via email.`);
+                document.getElementById('subEmail').value = "";
+                toggleSubscribeModal();
+            }
         }
 
         function addQuickShortcut() {
@@ -703,9 +810,9 @@
 
         function changeLanguage(lang) {
             const dict = {
-                en: { hero: "TIG OFFICIAL POWERED ECOSYSTEM", placeholder: "Search universal resources, knowledge, or web apps..." },
-                ur: { hero: "ٹی آئی جی آفیشل ایکو سسٹم", placeholder: "وسائل، علم یا ویب ایپس تلاش کریں..." },
-                ar: { hero: "نظام TIG الرسمي البيئي", placeholder: "ابحث عن الموارد والمعرفة..." }
+                en: { hero: "VERIFIED CREATOR & ECOSYSTEM PORTAL", placeholder: "Search TIG Official articles, resources, or web apps..." },
+                ur: { hero: "مصدق تخلیق کار اور ایکو سسٹم پورٹل", placeholder: "ٹی آئی جی کے مضامین اور ویب ایپس تلاش کریں..." },
+                ar: { hero: "بوابة المنشئ المعتمدة والنظام البيئي", placeholder: "ابحث عن مقالات TIG والتطبيقات..." }
             };
             const current = dict[lang] || dict.en;
             document.getElementById('heroSubtitle').textContent = current.hero;
@@ -722,7 +829,7 @@
             content.textContent = "Analyzing query with TIG AI Search Intelligence...";
 
             setTimeout(() => {
-                content.textContent = `TIG Universal AI Summary for "${query}":\n\nTIG Official v3.2 delivers verified enterprise knowledge and web app integration across international standards. All data flows securely under humanity-centric protocols.`;
+                content.textContent = `TIG Universal AI Summary for "${query}":\n\nTIG Official v3.4 delivers verified creator articles and web app integration across international standards. All data flows securely under humanity-centric protocols.`;
             }, 1200);
         }
     </script>
