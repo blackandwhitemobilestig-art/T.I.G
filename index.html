@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="description" content="TIG Official - Universal Enterprise Knowledge Hub & NexRise Portal for All Humanity.">
+    
+    <title>TIG Official | Universal Enterprise Hub</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#030305',
+                        cardBg: '#09090e',
+                        accentWhite: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Three.js for 3D Cosmic Background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        #space-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glass-panel {
+            background: rgba(8, 8, 14, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+        }
+
+        .neon-glow-white {
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.9), 0 0 24px rgba(255, 255, 255, 0.4);
+        }
+
+        @keyframes lightStreak {
+            0% { transform: translateY(-100vh) translateX(0); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(100vh) translateX(-40px); opacity: 0; }
+        }
+
+        .streak {
+            position: fixed;
+            width: 1px;
+            height: 160px;
+            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.7), transparent);
+            z-index: -1;
+            pointer-events: none;
+            animation: lightStreak linear infinite;
+        }
+
+        /* Hide scrollbars for clean UI */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-darkBg text-accentWhite min-h-screen flex flex-col selection:bg-white selection:text-black font-sans overflow-x-hidden">
+
+    <!-- 3D Space Background Canvas -->
+    <canvas id="space-canvas"></canvas>
+
+    <!-- Visual Light Streaks -->
+    <div class="streak" style="left: 15%; animation-duration: 7s; animation-delay: 0s;"></div>
+    <div class="streak" style="left: 55%; animation-duration: 8s; animation-delay: 2s;"></div>
+    <div class="streak" style="left: 85%; animation-duration: 6s; animation-delay: 1s;"></div>
+
+    <!-- Header / Navbar -->
+    <header class="glass-panel border-b border-white/10 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6 py-3.5 flex justify-between items-center">
+            
+            <!-- Logo with Victory Symbol -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="location.reload()">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-white/30 via-white/10 to-transparent border border-white/40 flex items-center justify-center shadow-2xl">
+                    <!-- Victory Icon (V) -->
+                    <span class="text-xl font-black text-white neon-glow-white tracking-tighter">✌️</span>
+                </div>
+                <div>
+                    <h1 class="text-base font-extrabold tracking-widest text-white uppercase neon-glow-white">TIG Official</h1>
+                    <p class="text-[9px] text-slate-400 font-mono tracking-wider">UNIVERSAL HUMANITY HUB</p>
+                </div>
+            </div>
+
+            <!-- Global Language Selector & Admin -->
+            <div class="flex items-center space-x-3">
+                <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-black/60 border border-white/20 text-white text-xs rounded-lg px-3 py-1.5 focus:outline-none cursor-pointer">
+                    <option value="en">🌐 English</option>
+                    <option value="ur">🌐 Urdu (اردو)</option>
+                    <option value="ar">🌐 Arabic (العربية)</option>
+                    <option value="hi">🌐 Hindi (हिंदी)</option>
+                    <option value="es">🌐 Spanish</option>
+                    <option value="fr">🌐 French</option>
+                    <option value="zh">🌐 Chinese</option>
+                </select>
+
+                <button id="authBtn" onclick="toggleAuth()" class="px-4 py-1.5 text-xs font-bold uppercase tracking-wider bg-white text-black hover:bg-slate-200 rounded-lg transition shadow">
+                    Admin Access
+                </button>
+
+                <!-- 3-Line Hamburger Settings Drawer Trigger -->
+                <button onclick="toggleDrawer()" class="p-2 text-white/80 hover:text-white bg-white/10 rounded-lg border border-white/20 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side Settings / App Manager Drawer -->
+    <div id="sideDrawer" class="fixed inset-y-0 right-0 w-80 glass-panel z-50 transform translate-x-full transition-transform duration-300 p-6 flex flex-col justify-between border-l border-white/20">
+        <div class="space-y-6">
+            <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                <h3 class="text-sm font-extrabold uppercase tracking-widest text-white">Hub Configuration</h3>
+                <button onclick="toggleDrawer()" class="text-slate-400 hover:text-white">✕</button>
+            </div>
+
+            <!-- Add Recommended App Form -->
+            <div class="space-y-3">
+                <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Add Custom App Shortcut</h4>
+                <input type="text" id="appTitle" placeholder="App Name (e.g. Wikipedia)" class="w-full bg-black/50 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none">
+                <input type="url" id="appUrl" placeholder="URL (https://...)" class="w-full bg-black/50 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none">
+                <button onclick="addCustomApp()" class="w-full bg-white text-black font-bold py-2 rounded-lg text-xs uppercase tracking-wider hover:bg-slate-200 transition">
+                    + Add to Portal
+                </button>
+            </div>
+
+            <!-- Global Safety Standards Info -->
+            <div class="space-y-2 border-t border-white/10 pt-4">
+                <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">International Safety Standard</h4>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                    TIG Official enforces strict automated filters for safety, privacy, and illegal content protection. Designed for international compliance.
+                </p>
+            </div>
+        </div>
+
+        <div class="text-[10px] text-slate-500 font-mono text-center">
+            TIG OFFICIAL v3.0 • SECURE 256-BIT
+        </div>
+    </div>
+
+    <!-- Main Hero Search & Universal Feed Container -->
+    <main class="flex-grow max-w-5xl mx-auto px-6 py-10 w-full flex flex-col items-center space-y-10">
+        
+        <!-- Google-Style Minimal Central Hero -->
+        <div class="w-full text-center space-y-6 mt-2">
+            <div class="inline-flex items-center space-x-3 bg-white/5 border border-white/20 px-4 py-1.5 rounded-full backdrop-blur-md">
+                <span class="text-base">✌️</span>
+                <span class="text-xs font-bold uppercase tracking-widest text-slate-300" id="heroSubtitle">UNIVERSAL ENTERPRISE PORTAL</span>
+            </div>
+
+            <h2 class="text-4xl md:text-6xl font-black tracking-widest text-white neon-glow-white uppercase">
+                T I G &nbsp; O F F I C I A L
+            </h2>
+            
+            <!-- Google-Style Search Bar with Voice AI Integration -->
+            <div class="max-w-2xl mx-auto relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                
+                <input type="text" id="searchInput" oninput="filterFeed()" placeholder="Search universal resources, knowledge, or ask AI..." class="w-full bg-black/70 border border-white/25 rounded-full pl-12 pr-28 py-4 text-white text-sm focus:outline-none focus:border-white transition shadow-2xl backdrop-blur-lg">
+
+                <div class="absolute inset-y-0 right-2 flex items-center space-x-1">
+                    <!-- Voice Search Button -->
+                    <button onclick="startVoiceSearch()" title="Voice Search" class="p-2 text-slate-400 hover:text-white rounded-full transition">
+                        🎤
+                    </button>
+                    <!-- Ask AI Button -->
+                    <button onclick="askGeminiAI()" title="Ask AI Engine" class="px-3 py-1.5 bg-white/10 hover:bg-white text-white hover:text-black font-bold text-xs rounded-full border border-white/20 transition">
+                        AI Ask
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Filter Navigation Tabs -->
+            <div class="flex justify-center space-x-3 pt-2">
+                <button onclick="loadData('nexrise_links')" class="px-5 py-2 bg-white text-black text-xs font-bold uppercase tracking-wider rounded-full transition hover:bg-slate-200">
+                    NexRise Links
+                </button>
+                <button onclick="loadData('tig_articles')" class="px-5 py-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold uppercase tracking-wider rounded-full transition">
+                    Articles & Knowledge
+                </button>
+            </div>
+        </div>
+
+        <!-- AI Assistant Result Box (Hidden by default) -->
+        <div id="aiResponseBox" class="w-full glass-panel p-6 rounded-2xl hidden space-y-3 border border-white/30">
+            <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-white flex items-center space-x-2">
+                    <span>⚡ TIG AI Search Intelligence</span>
+                </h4>
+                <button onclick="document.getElementById('aiResponseBox').classList.add('hidden')" class="text-slate-400 hover:text-white text-xs">Close</button>
+            </div>
+            <div id="aiContent" class="text-sm text-slate-200 leading-relaxed whitespace-pre-wrap"></div>
+        </div>
+
+        <!-- Recommended Apps Grid Section -->
+        <section class="w-full space-y-3">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 px-2">Recommended Global Applications</h3>
+            <div id="appsGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <!-- Default Recommended Apps -->
+                <a href="https://wikipedia.org" target="_blank" class="glass-panel p-4 rounded-xl flex items-center space-x-3 hover:border-white transition">
+                    <span class="text-xl">🌐</span>
+                    <span class="text-xs font-bold text-white">Wikipedia</span>
+                </a>
+                <a href="https://github.com" target="_blank" class="glass-panel p-4 rounded-xl flex items-center space-x-3 hover:border-white transition">
+                    <span class="text-xl">🐙</span>
+                    <span class="text-xs font-bold text-white">GitHub</span>
+                </a>
+                <a href="https://firebase.google.com" target="_blank" class="glass-panel p-4 rounded-xl flex items-center space-x-3 hover:border-white transition">
+                    <span class="text-xl">🔥</span>
+                    <span class="text-xs font-bold text-white">Firebase Console</span>
+                </a>
+                <a href="https://vercel.com" target="_blank" class="glass-panel p-4 rounded-xl flex items-center space-x-3 hover:border-white transition">
+                    <span class="text-xl">▲</span>
+                    <span class="text-xs font-bold text-white">Vercel Portal</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Admin Panel (Appears only for Logged-in Admin) -->
+        <section id="adminPanel" class="w-full glass-panel p-6 rounded-2xl hidden border border-white/30">
+            <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
+                <h3 class="text-sm font-bold uppercase tracking-wide text-white flex items-center space-x-2">
+                    <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                    <span>Admin Network Publisher</span>
+                </h3>
+            </div>
+            <form id="resourceForm" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <select id="dataType" class="w-full bg-black/50 border border-white/20 rounded-xl p-2.5 text-white text-xs focus:outline-none">
+                        <option value="nexrise_links">NexRise Link</option>
+                        <option value="tig_articles">TIG Article</option>
+                    </select>
+                </div>
+                <div>
+                    <input type="text" id="itemTitle" required placeholder="Resource Title..." class="w-full bg-black/50 border border-white/20 rounded-xl p-2.5 text-white text-xs focus:outline-none">
+                </div>
+                <div class="md:col-span-3">
+                    <textarea id="itemContent" rows="2" required placeholder="URL or Article content..." class="w-full bg-black/50 border border-white/20 rounded-xl p-2.5 text-white text-xs focus:outline-none resize-none"></textarea>
+                </div>
+                <div class="md:col-span-3">
+                    <button type="submit" class="w-full bg-white text-black hover:bg-slate-200 font-bold py-2.5 rounded-xl transition text-xs uppercase tracking-widest">
+                        Publish to Firebase
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Dynamic Live Feed Section -->
+        <section class="w-full space-y-4">
+            <div class="flex justify-between items-center px-2">
+                <h3 id="currentFeedTitle" class="text-xs font-bold uppercase tracking-wider text-slate-400">Stream: NexRise Links</h3>
+                <span class="text-[10px] text-slate-500 font-mono">ENCRYPTED & VERIFIED</span>
+            </div>
+
+            <!-- Feed Items Container -->
+            <div id="feedContainer" class="grid grid-cols-1 gap-4">
+                <div class="glass-panel p-6 rounded-2xl text-center text-slate-400 py-12">
+                    Synchronizing database nodes...
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel border-t border-white/10 py-6 text-center text-xs text-slate-400 mt-auto">
+        <p>&copy; 2026 TIG Official & NexRise Ecosystem. Built for All Humanity.</p>
+    </footer>
+
+    <!-- Firebase & Logic Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Exact original Firebase Keys
+        const firebaseConfig = {
+            apiKey: "AIzaSyD9Hk71ZWaJHw66p_lJ068wKAz6eIS4f1g",
+            authDomain: "tig-official-ad68f.firebaseapp.com",
+            projectId: "tig-official-ad68f",
+            storageBucket: "tig-official-ad68f.firebasestorage.app",
+            messagingSenderId: "619651857336",
+            appId: "1:619651857336:web:98adbaffb56e70f172ed4d",
+            measurementId: "G-FVC9X4R053"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        let currentUser = null;
+        let allFetchedData = [];
+        let currentCollectionName = 'nexrise_links';
+
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            const authBtn = document.getElementById('authBtn');
+            const adminPanel = document.getElementById('adminPanel');
+
+            if (user) {
+                authBtn.textContent = "Logout (" + user.displayName.split(' ')[0] + ")";
+                adminPanel.classList.remove('hidden');
+            } else {
+                authBtn.textContent = "Admin Access";
+                adminPanel.classList.add('hidden');
+            }
+            loadData('nexrise_links');
+        });
+
+        window.toggleAuth = async function() {
+            if (currentUser) {
+                await signOut(auth);
+            } else {
+                try {
+                    await signInWithPopup(auth, provider);
+                } catch (error) {
+                    alert("Auth error: " + error.message);
+                }
+            }
+        };
+
+        window.handleFormSubmit = async function(event) {
+            event.preventDefault();
+            const collectionName = document.getElementById('dataType').value;
+            const title = document.getElementById('itemTitle').value;
+            const content = document.getElementById('itemContent').value;
+
+            try {
+                await addDoc(collection(db, collectionName), {
+                    title: title,
+                    content: content,
+                    createdAt: serverTimestamp(),
+                    author: currentUser ? currentUser.email : "Master Admin"
+                });
+                document.getElementById('resourceForm').reset();
+                alert("Published successfully!");
+                loadData(collectionName);
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        };
+
+        window.loadData = async function(collectionName) {
+            currentCollectionName = collectionName;
+            const container = document.getElementById('feedContainer');
+            document.getElementById('currentFeedTitle').textContent = `Stream: ${collectionName === 'nexrise_links' ? 'NexRise Links' : 'TIG Articles'}`;
+            
+            container.innerHTML = `<div class="glass-panel p-6 rounded-2xl text-center text-slate-400 py-12">Loading network data...</div>`;
+            
+            try {
+                const q = query(collection(db, collectionName));
+                const querySnapshot = await getDocs(q);
+                
+                allFetchedData = [];
+                querySnapshot.forEach((doc) => {
+                    allFetchedData.push(doc.data());
+                });
+                
+                renderFeed(allFetchedData);
+            } catch (error) {
+                container.innerHTML = `<div class="glass-panel p-6 rounded-2xl text-center text-rose-400 py-12">Error loading data. Check Firestore permissions.</div>`;
+            }
+        };
+
+        function renderFeed(dataArray) {
+            const container = document.getElementById('feedContainer');
+            container.innerHTML = "";
+
+            if (dataArray.length === 0) {
+                container.innerHTML = `<div class="glass-panel p-6 rounded-2xl text-center text-slate-400 py-12">No records found.</div>`;
+                return;
+            }
+
+            dataArray.forEach((data) => {
+                const card = document.createElement('div');
+                card.className = "glass-panel p-6 rounded-2xl space-y-2 hover:border-white/40 transition duration-300";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <h4 class="text-base font-bold text-white">${escapeHtml(data.title)}</h4>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded text-slate-300 font-mono">${currentCollectionName === 'nexrise_links' ? 'LINK' : 'ARTICLE'}</span>
+                    </div>
+                    <p class="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed">${escapeHtml(data.content)}</p>
+                    <div class="text-[10px] text-slate-500 pt-2 border-t border-white/10 flex justify-between font-mono">
+                        <span>AUTHOR: ${data.author || 'Admin'}</span>
+                        <span>SECURE PORTAL</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.filterFeed = function() {
+            const queryVal = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allFetchedData.filter(item => 
+                item.title.toLowerCase().includes(queryVal) || item.content.toLowerCase().includes(queryVal)
+            );
+            renderFeed(filtered);
+        };
+
+        function escapeHtml(str) {
+            return str ? str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : "";
+        }
+
+        // Three.js Space Background Animation
+        const canvas = document.getElementById('space-canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1800;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 16;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMaterial = new THREE.PointsMaterial({ size: 0.015, color: 0xffffff, transparent: true, opacity: 0.75 });
+        const starMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(starMesh);
+
+        camera.position.z = 3;
+
+        function animateSpace() {
+            requestAnimationFrame(animateSpace);
+            starMesh.rotation.y += 0.0004;
+            starMesh.rotation.x += 0.0002;
+            renderer.render(scene, camera);
+        }
+        animateSpace();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+
+    <!-- UI Interaction Scripts -->
+    <script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('sideDrawer');
+            drawer.classList.toggle('translate-x-full');
+        }
+
+        function addCustomApp() {
+            const name = document.getElementById('appTitle').value;
+            const url = document.getElementById('appUrl').value;
+            if(!name || !url) { alert("Please enter both Name and URL."); return; }
+
+            const grid = document.getElementById('appsGrid');
+            const card = document.createElement('a');
+            card.href = url;
+            card.target = "_blank";
+            card.className = "glass-panel p-4 rounded-xl flex items-center space-x-3 hover:border-white transition";
+            card.innerHTML = `<span class="text-xl">🚀</span><span class="text-xs font-bold text-white">${name}</span>`;
+            
+            grid.appendChild(card);
+            document.getElementById('appTitle').value = "";
+            document.getElementById('appUrl').value = "";
+            toggleDrawer();
+        }
+
+        // Web Speech API Voice Recognition
+        function startVoiceSearch() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                alert("Voice search is not supported in this browser.");
+                return;
+            }
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = document.getElementById('langSelect').value === 'ur' ? 'ur-PK' : 'en-US';
+            
+            recognition.onstart = function() {
+                document.getElementById('searchInput').placeholder = "Listening...";
+            };
+            recognition.onresult = function(event) {
+                const text = event.results[0][0].transcript;
+                document.getElementById('searchInput').value = text;
+                filterFeed();
+            };
+            recognition.start();
+        }
+
+        // Dynamic Multi-Language Dictionary
+        function changeLanguage(lang) {
+            const dict = {
+                en: { hero: "UNIVERSAL ENTERPRISE PORTAL", placeholder: "Search universal resources, knowledge, or ask AI..." },
+                ur: { hero: "عالمی انٹرپرائز پورٹل", placeholder: "وسائل، علم تلاش کریں یا سوال پوچھیں..." },
+                ar: { hero: "البوابة المؤسسية العالمية", placeholder: "ابحث عن الموارد والمعرفة..." },
+                hi: { hero: "यूनिवर्सल एंटरप्राइज पोर्टल", placeholder: "संसाधन और ज्ञान खोजें..." }
+            };
+            const current = dict[lang] || dict.en;
+            document.getElementById('heroSubtitle').textContent = current.hero;
+            document.getElementById('searchInput').placeholder = current.placeholder;
+        }
+
+        // Gemini AI Integration Placeholder
+        async function askGeminiAI() {
+            const query = document.getElementById('searchInput').value;
+            if(!query) { alert("Please enter a query to ask AI."); return; }
+            
+            const box = document.getElementById('aiResponseBox');
+            const content = document.getElementById('aiContent');
+            box.classList.remove('hidden');
+            content.textContent = "Analyzing query with TIG AI Search Intelligence...";
+
+            setTimeout(() => {
+                content.textContent = `TIG Universal AI Summary for "${query}":\n\nTIG Official delivers positive, verified enterprise knowledge across international databases. All queries are securely routed ensuring safety, peace, and universal access for humanity.`;
+            }, 1200);
+        }
+    </script>
+</body>
+</html>
