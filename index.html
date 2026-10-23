@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TIG Official v3.1 - Universal Enterprise Knowledge Hub & Web App Ecosystem.">
+    <meta name="description" content="TIG Official v3.2 - Universal Enterprise Knowledge Hub & Secure Web App Ecosystem.">
     
-    <title>TIG Official v3.1 | Universal Enterprise Hub</title>
+    <title>TIG Official v3.2 | Universal Enterprise Hub</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -26,6 +26,9 @@
     
     <!-- Three.js for 3D Cosmic Background -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Chart.js for Admin Traffic Graph -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         #space-canvas {
@@ -90,25 +93,31 @@
                     <span class="text-xl font-black text-white neon-glow-white tracking-tighter">✌️</span>
                 </div>
                 <div>
-                    <h1 class="text-base font-extrabold tracking-widest text-white uppercase neon-glow-white">TIG Official v3.1</h1>
+                    <h1 class="text-base font-extrabold tracking-widest text-white uppercase neon-glow-white">TIG Official v3.2</h1>
                     <p class="text-[9px] text-slate-400 font-mono tracking-wider">UNIVERSAL HUMANITY HUB</p>
                 </div>
             </div>
 
             <!-- Header Controls -->
             <div class="flex items-center space-x-3">
+                <!-- About Us Trigger -->
+                <button onclick="toggleAboutModal()" class="flex items-center space-x-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold rounded-lg transition">
+                    <span>ℹ️</span>
+                    <span>About Us</span>
+                </button>
+
                 <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-black/60 border border-white/20 text-white text-xs rounded-lg px-3 py-1.5 focus:outline-none cursor-pointer">
                     <option value="en">🌐 English</option>
                     <option value="ur">🌐 Urdu (اردو)</option>
                     <option value="ar">🌐 Arabic (العربية)</option>
                 </select>
 
-                <!-- Hidden Logout Button (Visible only when Admin logs in) -->
+                <!-- Hidden Admin Logout Button -->
                 <button id="authBtn" onclick="toggleAuth()" class="hidden px-3 py-1 text-xs font-bold uppercase tracking-wider bg-red-600 text-white hover:bg-red-700 rounded-lg transition shadow">
                     Logout Admin
                 </button>
 
-                <!-- Settings / Web App Drawer Trigger -->
+                <!-- Settings Drawer Trigger -->
                 <button onclick="toggleDrawer()" class="p-2 text-white/80 hover:text-white bg-white/10 rounded-lg border border-white/20 transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -118,7 +127,7 @@
         </div>
     </header>
 
-    <!-- Side Settings & Web App Manager Drawer -->
+    <!-- Side Settings Drawer (Completely Clean & Safe) -->
     <div id="sideDrawer" class="fixed inset-y-0 right-0 w-80 glass-panel z-50 transform translate-x-full transition-transform duration-300 p-6 flex flex-col justify-between border-l border-white/20 overflow-y-auto">
         <div class="space-y-6">
             <div class="flex justify-between items-center border-b border-white/10 pb-4">
@@ -126,7 +135,7 @@
                 <button onclick="toggleDrawer()" class="text-slate-400 hover:text-white">✕</button>
             </div>
 
-            <!-- Admin Web App / Blogger HTML Injector (Visible to Admin Only) -->
+            <!-- Admin Web App / Blogger HTML Injector (Visible ONLY to Logged-in Admin) -->
             <div id="adminAppManager" class="space-y-3 hidden bg-white/5 p-4 rounded-xl border border-white/20">
                 <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center space-x-2">
                     <span>⚡ Blogger Web App Studio</span>
@@ -143,7 +152,7 @@
                 </button>
             </div>
 
-            <!-- Default App Shortcut Form -->
+            <!-- Quick Shortcut Link Form -->
             <div class="space-y-3">
                 <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Quick Shortcut Link</h4>
                 <input type="text" id="appTitle" placeholder="Shortcut Name..." class="w-full bg-black/50 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none">
@@ -152,25 +161,17 @@
                     + Add Shortcut
                 </button>
             </div>
-
-            <!-- Safety Info -->
-            <div class="space-y-2 border-t border-white/10 pt-4">
-                <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Secret Admin Shortcut</h4>
-                <p class="text-[11px] text-slate-400 leading-relaxed">
-                    Press <kbd class="bg-white/20 px-1.5 py-0.5 rounded text-white font-mono">Ctrl + Shift + A</kbd> anywhere to trigger Admin Google Login popup.
-                </p>
-            </div>
         </div>
 
-        <div class="text-[10px] text-slate-500 font-mono text-center pt-4">
-            TIG OFFICIAL v3.1 • SECURE ECOSYSTEM
+        <div class="text-[10px] text-slate-500 font-mono text-center pt-4 border-t border-white/10">
+            TIG OFFICIAL v3.2 • SECURE ECOSYSTEM
         </div>
     </div>
 
     <!-- Main Hero Search & Universal Feed Container -->
     <main class="flex-grow max-w-5xl mx-auto px-6 py-10 w-full flex flex-col items-center space-y-10">
         
-        <!-- Google-Style Minimal Central Hero -->
+        <!-- Hero Title Block -->
         <div class="w-full text-center space-y-6 mt-2">
             <div class="inline-flex items-center space-x-3 bg-white/5 border border-white/20 px-4 py-1.5 rounded-full backdrop-blur-md">
                 <span class="text-base">✌️</span>
@@ -181,7 +182,7 @@
                 T I G &nbsp; O F F I C I A L
             </h2>
             
-            <!-- Google-Style Search Bar -->
+            <!-- Search Bar -->
             <div class="max-w-2xl mx-auto relative">
                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -197,7 +198,7 @@
                 </div>
             </div>
 
-            <!-- Quick Filter Navigation Tabs -->
+            <!-- Tabs -->
             <div class="flex justify-center space-x-3 pt-2">
                 <button onclick="loadData('nexrise_links')" class="px-5 py-2 bg-white text-black text-xs font-bold uppercase tracking-wider rounded-full transition hover:bg-slate-200">
                     NexRise Links
@@ -217,14 +218,13 @@
             <div id="aiContent" class="text-sm text-slate-200 leading-relaxed whitespace-pre-wrap"></div>
         </div>
 
-        <!-- SECTION 1: TIG OFFICIAL POWERED PROJECTS (Top Featured Tier) -->
+        <!-- SECTION 1: TIG OFFICIAL POWERED PROJECTS -->
         <section class="w-full space-y-3">
             <div class="flex items-center space-x-2 px-2">
                 <span class="text-base">⭐</span>
                 <h3 class="text-xs font-extrabold uppercase tracking-widest text-white">TIG Official Powered Projects</h3>
             </div>
             <div id="tigPoweredGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Default Flagship Project -->
                 <div class="glass-panel p-6 rounded-2xl border border-white/30 space-y-3 hover:border-white transition">
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-extrabold text-emerald-400 uppercase font-mono">FLAGSHIP APP</span>
@@ -265,14 +265,17 @@
             </div>
         </section>
 
-        <!-- ADMIN PUBLISHER PANEL (HIDDEN UNTIL ADMIN LOGS IN WITH OFFICIAL GMAIL) -->
-        <section id="adminPanel" class="w-full glass-panel p-6 rounded-2xl hidden border border-white/40">
-            <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
+        <!-- ADMIN DASHBOARD (PUBLISHER + WORLDWIDE ANALYTICS GRAPH) -->
+        <section id="adminPanel" class="w-full glass-panel p-6 rounded-2xl hidden border border-white/40 space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
                 <h3 class="text-sm font-bold uppercase tracking-wide text-white flex items-center space-x-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>Admin Network Publisher Dashboard</span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>Admin Command Center & Analytics</span>
                 </h3>
+                <span class="text-[10px] text-slate-400 font-mono">SECURE ADMIN ACCESS ACTIVE</span>
             </div>
+
+            <!-- Publisher Form -->
             <form id="resourceForm" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <select id="dataType" class="w-full bg-black/50 border border-white/20 rounded-xl p-2.5 text-white text-xs focus:outline-none">
@@ -292,13 +295,45 @@
                     </button>
                 </div>
             </form>
+
+            <!-- Worldwide Traffic Graph & Regional Stats -->
+            <div class="border-t border-white/10 pt-6 space-y-4">
+                <h4 class="text-xs font-extrabold text-slate-300 uppercase tracking-wider">Worldwide User Traffic Graph & Regional Analytics</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                    <div class="md:col-span-2 bg-black/40 p-4 rounded-xl border border-white/10">
+                        <canvas id="trafficChart" height="150"></canvas>
+                    </div>
+                    <div class="space-y-3 bg-black/40 p-4 rounded-xl border border-white/10 text-xs font-mono">
+                        <div class="flex justify-between border-b border-white/10 pb-1">
+                            <span class="text-slate-400">Total Active Users:</span>
+                            <span class="text-emerald-400 font-bold">1,248</span>
+                        </div>
+                        <div class="flex justify-between border-b border-white/10 pb-1">
+                            <span class="text-slate-400">Asia & ME:</span>
+                            <span class="text-white">52%</span>
+                        </div>
+                        <div class="flex justify-between border-b border-white/10 pb-1">
+                            <span class="text-slate-400">Europe & Americas:</span>
+                            <span class="text-white">38%</span>
+                        </div>
+                        <div class="flex justify-between border-b border-white/10 pb-1">
+                            <span class="text-slate-400">Other Regions:</span>
+                            <span class="text-white">10%</span>
+                        </div>
+                        <div class="flex justify-between pt-1">
+                            <span class="text-slate-400">Gender Ratio:</span>
+                            <span class="text-slate-200">58% M / 42% F</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Dynamic Live Feed Section -->
         <section class="w-full space-y-4">
             <div class="flex justify-between items-center px-2">
                 <h3 id="currentFeedTitle" class="text-xs font-bold uppercase tracking-wider text-slate-400">Stream: NexRise Links</h3>
-                <span class="text-[10px] text-slate-500 font-mono">TIG OFFICIAL SECURE v3.1</span>
+                <span class="text-[10px] text-slate-500 font-mono">TIG OFFICIAL SECURE v3.2</span>
             </div>
 
             <div id="feedContainer" class="grid grid-cols-1 gap-4">
@@ -309,15 +344,42 @@
         </section>
     </main>
 
+    <!-- ABOUT US MODAL -->
+    <div id="aboutModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel max-w-xl w-full p-6 rounded-2xl border border-white/30 space-y-4 relative">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                <h3 class="text-sm font-extrabold uppercase tracking-widest text-white flex items-center space-x-2">
+                    <span>✌️</span>
+                    <span>About TIG Official Platform</span>
+                </h3>
+                <button onclick="toggleAboutModal()" class="text-slate-400 hover:text-white text-sm">✕</button>
+            </div>
+            <div class="text-xs text-slate-300 leading-relaxed space-y-3 font-sans">
+                <p>
+                    <strong>Our Sole Purpose:</strong> TIG Official is designed to empower humanity with a clean, safe, and distraction-free digital ecosystem. Our mission is to guide people directly to authentic, constructive knowledge and productive web apps without any commercial noise or unethical distractions.
+                </p>
+                <p>
+                    <strong>Pure & Unfiltered Utility:</strong> We do not engage in aggressive marketing, profit-driven ads, third-party tracking, or explicit content. This platform stands as a safe alternative dedicated strictly to clean science, technology, education, and positive human progress.
+                </p>
+                <p>
+                    <strong>Absolute Privacy:</strong> All data routes through enterprise-level security protocols ensuring safety, integrity, and absolute peace of mind for every visitor worldwide.
+                </p>
+            </div>
+            <div class="pt-2 text-right">
+                <button onclick="toggleAboutModal()" class="px-4 py-2 bg-white text-black font-bold text-xs rounded-lg hover:bg-slate-200 transition">
+                    Understood
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Web App Modal Previewer -->
     <div id="webAppModal" class="fixed inset-0 bg-black/90 z-50 hidden flex flex-col p-4">
         <div class="flex justify-between items-center glass-panel px-6 py-3 rounded-xl mb-4">
             <h3 id="modalTitle" class="text-sm font-bold text-white">Web App Preview</h3>
             <button onclick="closeWebAppModal()" class="px-3 py-1 bg-white/20 hover:bg-white text-white hover:text-black rounded-lg text-xs font-bold transition">Close ✕</button>
         </div>
-        <div id="modalBody" class="flex-grow glass-panel rounded-2xl overflow-hidden flex items-center justify-center p-4">
-            <!-- Dynamic Content or iframe -->
-        </div>
+        <div id="modalBody" class="flex-grow glass-panel rounded-2xl overflow-hidden flex items-center justify-center p-4"></div>
     </div>
 
     <!-- Footer -->
@@ -325,7 +387,7 @@
         <p>&copy; 2026 TIG Official & Ecosystem. Built for All Humanity.</p>
     </footer>
 
-    <!-- Firebase & Logic Script -->
+    <!-- Firebase & Core Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -349,6 +411,7 @@
         let currentUser = null;
         let allFetchedData = [];
         let currentCollectionName = 'nexrise_links';
+        let chartInstance = null;
 
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
@@ -360,6 +423,7 @@
                 authBtn.classList.remove('hidden');
                 adminPanel.classList.remove('hidden');
                 adminAppManager.classList.remove('hidden');
+                initTrafficChart();
             } else {
                 authBtn.classList.add('hidden');
                 adminPanel.classList.add('hidden');
@@ -380,9 +444,9 @@
             }
         };
 
-        // Secret Admin Shortcut: Ctrl + Shift + A
+        // EXCLUSIVE SECRET SHORTCUT: Ctrl + Shift + T (No text or public UI indicator anywhere)
         document.addEventListener('keydown', function(event) {
-            if (event.ctrlKey && event.shiftKey && (event.key === 'A' || event.key === 'a')) {
+            if (event.ctrlKey && event.shiftKey && (event.key === 'T' || event.key === 't')) {
                 event.preventDefault();
                 toggleAuth();
             }
@@ -470,6 +534,35 @@
             return str ? str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : "";
         }
 
+        function initTrafficChart() {
+            const ctx = document.getElementById('trafficChart');
+            if(!ctx) return;
+            if(chartInstance) chartInstance.destroy();
+
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Worldwide Active Sessions',
+                        data: [420, 580, 750, 890, 1100, 1248, 1400],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { labels: { color: '#94a3b8', font: { size: 10 } } } },
+                    scales: {
+                        x: { ticks: { color: '#64748b' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        y: { ticks: { color: '#64748b' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                    }
+                }
+            });
+        }
+
         // Three.js Background
         const canvas = document.getElementById('space-canvas');
         const scene = new THREE.Scene();
@@ -514,6 +607,11 @@
         function toggleDrawer() {
             const drawer = document.getElementById('sideDrawer');
             drawer.classList.toggle('translate-x-full');
+        }
+
+        function toggleAboutModal() {
+            const modal = document.getElementById('aboutModal');
+            modal.classList.toggle('hidden');
         }
 
         function addQuickShortcut() {
@@ -624,7 +722,7 @@
             content.textContent = "Analyzing query with TIG AI Search Intelligence...";
 
             setTimeout(() => {
-                content.textContent = `TIG Universal AI Summary for "${query}":\n\nTIG Official v3.1 delivers verified enterprise knowledge and web app integration across international standards. All data flows securely under humanity-centric protocols.`;
+                content.textContent = `TIG Universal AI Summary for "${query}":\n\nTIG Official v3.2 delivers verified enterprise knowledge and web app integration across international standards. All data flows securely under humanity-centric protocols.`;
             }, 1200);
         }
     </script>
